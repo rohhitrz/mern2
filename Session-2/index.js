@@ -4,7 +4,7 @@ const express = require("express");
 
 const app = express();
 currencyData = require('./currencies.json');
-const {getCurrencies} = require("./controllers/currencies.controller");
+const {getCurrencies,getCurrencyBySymbol} = require("./controllers/currencies.controller");
 
 const PORT= 8082;
 
@@ -16,20 +16,7 @@ app.get('/',(req,res)=>{
 app.get('/currencies',getCurrencies);
 
 
-app.get('/currencies/:symbol',(req,res)=>{
-    
-    
-    console.log(req.params.symbol);
-
-
-    const reqCurrObj = currencyData.data.find((curr)=> curr.id.toLowerCase() == req.params.symbol);
-
-    if(reqCurrObj === undefined){
-       return  res.status(404).send("wrong request")
-    }
-    res.json(reqCurrObj);
-   
-})
+app.get('/currencies/:symbol', getCurrencyBySymbol);
 
 
 

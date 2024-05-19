@@ -12,4 +12,21 @@ const getCurrencies = (req,res)=>{
 return res.json(currencyData);
 };
 
-module.exports = {getCurrencies};
+const getCurrencyBySymbol = (req,res)=>{
+    
+    
+    console.log(req.params.symbol);
+
+
+    const reqCurrObj = currencyData.data.find((curr)=> curr.id.toLowerCase() == req.params.symbol);
+
+    if(reqCurrObj === undefined){
+       return  res.status(404).send("wrong request")
+    }
+    res.json(reqCurrObj);
+   
+};
+
+module.exports = {getCurrencies,getCurrencyBySymbol};
+
+
