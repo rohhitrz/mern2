@@ -19,7 +19,7 @@ app.get('/currencies',getCurrencies);
 app.get('/currencies/:symbol', getCurrencyBySymbol);
 
 
-// debug
+
 
 app.post('/',(req,res)=>{
     res.status(200)
