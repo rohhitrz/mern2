@@ -1,9 +1,8 @@
 //Express
-
 const express = require("express");
 
 const app = express();
-currencyData = require('./currencies.json');
+
 const {getCurrencies,getCurrencyBySymbol} = require("./controllers/currencies.controller");
 
 const PORT= 8082;

@@ -1,3 +1,5 @@
+currencyData = require('../currencies.json');
+
 const getCurrencies = (req,res)=>{
     console.log(req.query);
     // console.log(req.params.symbol);
