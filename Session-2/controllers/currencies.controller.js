@@ -25,6 +25,7 @@ const getCurrencyBySymbol = (req,res)=>{
     if(reqCurrObj === undefined){
        return  res.status(404).send("wrong request")
     }
+    
     res.json(reqCurrObj);
    
 };
