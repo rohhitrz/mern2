@@ -28,5 +28,8 @@ GET http://localhost:8082/users/search?age=49
 GET http://localhost:8082/users/search?gender=female
 
 
+###
+GET http://localhost:8082/users/search
+
 
 

@@ -1,6 +1,11 @@
 const userData = require("../users.json");
-const userSearch = require('../schemas/userSearch.schema');
+const userSearchSchema = require('../schemas/userSearch.schema');
 
+const validateUser =(gender,age)=>{
+    const result = userSearchSchema.validate(gender,age);
+    console.log(JSON.stringify(result,null,2));
+    return result.error;
+}
 
 const getUsers = (req,res)=>{
     res.json(userData.data);
@@ -20,20 +25,25 @@ const filterByAge= (users,age)=> users.filter((user)=> user.dob.age === age);
 
 const searchUser = (req,res)=>{
     const {gender,age}= req.query              //object destructing
-    const result=userSearch.validate(req.query);
-    console.log(JSON.stringify(result,null,2));
-
     
     //req.query is an object which will contain all the query parameters
-    
-     // console.log(gender,age);
+   // console.log(gender,age);
+
+    // const result=userSearch.validate(req.query);
+    // console.log(JSON.stringify(result,null,2));
+
+    const errors = validateUser(gender,age);
+    if (errors)
+        return res.status(422).json({ messsage: errors.details[0].message });
+
+   
 
     if(gender && age){
 
-        if(!["male","female"].includes(gender)) return res.status(400).json({message: "gender should either be male or female"});
-        if(isNaN(age) || (age<=0|| age>100)){
-            return res.status(400).json({message: "age must be a number and between 1 to 100"})
-        }
+        // if(!["male","female"].includes(gender)) return res.status(400).json({message: "gender should either be male or female"});
+        // if(isNaN(age) || (age<=0|| age>100)){
+        //     return res.status(400).json({message: "age must be a number and between 1 to 100"})
+        // }
 
        const filteredByGender =filterByGender(userData.data, gender);
        const filteredByage =filterByAge(filteredByGender,parseInt(age));  //here we have passed filteredByGender and not the priginal user data as we are first doing filter by gender and then filtering it by age
@@ -47,23 +57,23 @@ const searchUser = (req,res)=>{
     
     }
 
-   else if(gender){
-        if(!["male","female"].includes(gender)) return res.status(400).json({message: "gender should either be male or female"});
+   if(gender){
+        // if(!["male","female"].includes(gender)) return res.status(400).json({message: "gender should either be male or female"});
         return  res.json(userData.data.filter((user)=>user.gender === gender));
     }
 
 
 
-    else if(age){
-        if(isNaN(age) || (age<=0|| age>100)){
-            return res.status(400).json({message: "age must be a number and between 1 to 100"})
-        }
+    if(age){
+        // if(isNaN(age) || (age<=0|| age>100)){
+        //     return res.status(400).json({message: "age must be a number and between 1 to 100"})
+        // }
         return res.json(userData.data.filter((user)=>user.dob.age === parseInt(age)));
     }
 
-    else{
-        return res.status(400 ).json({message: "age or gender not found"});
-    }
+    // else{
+    //     return res.status(400 ).json({message: "age or gender not found"});
+    // }
 
 
 } 
