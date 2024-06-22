@@ -8,16 +8,17 @@ const validateUser =(gender,age)=>{
     return result.error;
 }
 
-const verifyAuth =(Authorization)=>{
-    if(Authorization===process.env.PASSWORD) return true;
+const verifyAuth =(authorization)=>{
+    if(authorization===process.env.PASSWORD) return true;
     return false;
 }
 
 const getUsers = (req,res)=>{
-    if(verifyAuth(req.headers.authorization)) return res.sendStatus(403);
+    if(!verifyAuth(req.headers.authorization)) 
+        return res.status(403).json({messsage: "Unauthorized Request"});
     res.json(userData.data);
 
-}
+};
 
 const getUserByUserId = (req,res)=>{
     console.log(req.params.uuid);
