@@ -1,13 +1,20 @@
 const userData = require("../users.json");
 const userSearchSchema = require('../schemas/userSearch.schema');
 
+
 const validateUser =(gender,age)=>{
     const result = userSearchSchema.validate(gender,age);
     console.log(JSON.stringify(result,null,2));
     return result.error;
 }
 
+const verifyAuth =(Authorization)=>{
+    if(Authorization===process.env.PASSWORD) return true;
+    return false;
+}
+
 const getUsers = (req,res)=>{
+    if(verifyAuth(req.headers.authorization)) return res.sendStatus(403);
     res.json(userData.data);
 
 }
