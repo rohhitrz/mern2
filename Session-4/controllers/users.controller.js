@@ -1,6 +1,5 @@
 const userData = require("../users.json");
 const userSearchSchema = require('../schemas/userSearch.schema');
-const verifyAuth = require('../utils/verifyAuth'); 
 
 
 const validateUser =(gender,age)=>{
@@ -10,9 +9,7 @@ const validateUser =(gender,age)=>{
 }
 
 const getUsers = (req,res)=>{
-    if(!verifyAuth(req.headers.authorization)) 
-        return res.status(403).json({messsage: "Unauthorized Request"});
-    res.json(userData.data);
+     res.json(userData.data);
 
 };
 
