@@ -14,12 +14,17 @@ const PORT= 8082;
 const {getCurrencies,getCurrencyBySymbol} = require("./controllers/currencies.controller");
 const {getUsers,getUserByUserId,searchUser}= require("./controllers/users.controller");
 
-
-app.use(verifyAuth);
+ 
 app.get('/',(req,res)=>{
     res.send('<h1>Currency Database </h1>');
 });
 
+app.get('/status', verifyAuth, (req,res)=>{
+    res.send("API WORKING");
+})
+
+app.use(verifyAuth);
+ 
 
 app.use('/currencies',currenciesRouter);
 
@@ -28,6 +33,8 @@ app.use('/currencies',currenciesRouter);
 
 
 //  users/:uuid
+
+
 
 app.use('/users',userRouter);
 

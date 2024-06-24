@@ -1,12 +1,9 @@
 const userData = require("../users.json");
 const userSearchSchema = require('../schemas/userSearch.schema');
+const validateUserSearch= require('../middlewares/validators/validateUserSearch'); 
 
 
-const validateUser =(gender,age)=>{
-    const result = userSearchSchema.validate(gender,age);
-    console.log(JSON.stringify(result,null,2));
-    return result.error;
-}
+
 
 const getUsers = (req,res)=>{
      res.json(userData.data);
@@ -33,9 +30,8 @@ const searchUser = (req,res)=>{
     // const result=userSearch.validate(req.query);
     // console.log(JSON.stringify(result,null,2));
 
-    const errors = validateUser(gender,age);
-    if (errors)
-        return res.status(422).json({ messsage: errors.details[0].message });
+    // const errors = validateUserSearch (gender,age); 
+    
 
    
 
