@@ -6,21 +6,41 @@ const Blog = require('../models/blog.model');
  
 
 const getBlogs =  async (req,res)=>{
+  try{
   res.send( await  Blog.find());
+  }
+  catch(err){
+    res.status(500).send("something went wrong!");
+  }
 
 }
 
 const getBlogById =async(req,res)=>{
+  try{
 
   // console.log(req.params.id);
-  res.send(await Blog.find({_id:req.params.id}));
+  // res.send(await Blog.find({_id:req.params.id}));
+  res.send(await Blog.findById(req.params.id));
+  }
+  catch(err){
+    res.status(404).send("something went wrong!");
+  }
 }
 
 const getAuthor=async(req,res)=>{
   // console.log(req.params.author);
-  const author = req.params.author;
+  try{
+  let author = req.params.author;
+  // author = author.toLowerCase();
   const blogs = await( Blog.find({authors: author}));
+  if(blogs.length === 0){
+    return res.status(404).send("Wrong name of author");
+  }
   res.send(blogs);
+  }
+  catch(err){
+    res.status(500).send("something went wrong!");
+  } 
   
 
 }
