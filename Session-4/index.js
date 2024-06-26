@@ -21,7 +21,7 @@ const {getUsers,getUserByUserId,searchUser}= require("./controllers/users.contro
 const DB_URI=process.env.DB_URI;
 app.use(express.json()) // this particular middleware will help to send the body along with the  request as json 
 
-//because in general body is sent in a binary format 
+//because in general body is sent in a binary format  
 
 const connectDB= async ()=>{
     try{
