@@ -8,6 +8,7 @@ const userRouter = require('./routes/users.routes');
 const currenciesRouter = require('./routes/currencies.routes');
 const blogRouter = require('./routes/blog.routes')
 // const verifyAuth = require('./middlewares/verifyAuth'); 
+const verifyBody = require('./middlewares/verifyBodyType');
 
 
 const app = express();
@@ -17,8 +18,11 @@ const PORT= 8082;
 
 const {getCurrencies,getCurrencyBySymbol} = require("./controllers/currencies.controller");
 const {getUsers,getUserByUserId,searchUser}= require("./controllers/users.controller");
+const verifyBodyType = require("./middlewares/verifyBodyType");
 // const { default: mongoose } = require("mongoose");
 const DB_URI=process.env.DB_URI;
+
+app.use(verifyBodyType);
 app.use(express.json()) // this particular middleware will help to send the body along with the  request as json 
 
 //because in general body is sent in a binary format  
