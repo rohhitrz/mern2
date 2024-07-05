@@ -37,7 +37,7 @@ const getBlogById =async(req,res)=>{
 }
 
 const findBlogByHelper= async (id)=>{
-  return await Blog.findById(id);
+  return  Blog.findById(id);
   
 }
 const getAuthor=async(req,res)=>{
@@ -92,5 +92,20 @@ const deleteBlogById= async(req,res)=>{
 
 }
 
+const updateBlogById=async(req,res)=>{
+  try{
+  const reqBlog= findBlogByHelper(req.params.id);
+  if(reqBlog ===null){
+    res.status(404).json({message:"could not find a blog with given id"});
+  }
+  const updatedBlog=await Blog.findOneAndUpdate({_id:req.params.id},req.body, {new:true});
+  res.status(200).json(updatedBlog);
+  }
+  catch(error){
+    console.log(error);
+  }
 
-module.exports={getBlogs,createBlog,getBlogById,getAuthor,deleteBlogById};
+}
+
+
+module.exports={getBlogs,createBlog,getBlogById,getAuthor,deleteBlogById,updateBlogById};
