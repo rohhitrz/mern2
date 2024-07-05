@@ -36,15 +36,9 @@ const getBlogById =async(req,res)=>{
   }
 }
 
-const findBlogByHelper= async (req,res)=>{
-  try{
-    const reqBlog = await Blog.findById({_id:req.params.id });
+const findBlogByHelper= async (id)=>{
+  return await Blog.findById(id);
   
-}
-catch(error){
-  console.log(error);
-  res.status(404).json({message:"cannot find blog by this ID"});
-}
 }
 const getAuthor=async(req,res)=>{
   // console.log(req.params.author);
