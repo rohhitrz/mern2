@@ -1,0 +1,62 @@
+###
+GET http://localhost:8082/status
+Authorization: LetMeIn
+###
+GET http://localhost:8082/currencies
+
+###
+
+###
+GET http://localhost:8082/
+
+
+###
+GET http://localhost:8082/currencies/inr
+Authorization: LetMeIn
+
+
+### 
+
+GET  http://localhost:8082/currencies?min_value=0.01
+
+###
+GET http://localhost:8082/users
+Authorization: LetMeIn
+
+###
+GET http://localhost:8082/users/6607d086-7159-4c26-beb1-280c9f9cbf35
+
+
+###
+GET http://localhost:8082/users/search?gender=male&age=49
+
+
+###
+GET http://localhost:8082/users/search?age=49
+
+###
+GET http://localhost:8082/users/search?gender=male
+Authorization: LetMeIn
+
+
+###
+GET http://localhost:8082/users/search?gender=male&age=49
+Authorization: LetMeIn
+
+
+###
+GET http://localhost:8082/blogs/author/ALPHA
+###
+POST http://localhost:8082/blogs
+
+Content-Type: application/json
+{
+   "title": "PUSTAK", 
+  "authors": ["LEKHAKH"], 
+  "content": "gyan", 
+  "publishedAt": null
+
+}
+
+
+
