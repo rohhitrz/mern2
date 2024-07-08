@@ -2,6 +2,7 @@
 
 const mongoose = require("mongoose");
 const Blog = require('../models/blog.model'); 
+const { message, regex } = require("../schemas/userSearch.schema");
 
  
 
@@ -58,6 +59,29 @@ const getAuthor=async(req,res)=>{
 
 }
 
+const searchBlogs=async(req,res)=>{
+  const {title,author}= req.query;
+  const authorExp= new RegExp(author);
+  try{
+    const blogs= await Blog.find({
+      $or: [
+        {title: {$regex:authorExp}},
+      
+        {author:{
+         $elemMatch:{email:author}
+      }}
+   ] });
+    res.send(blogs);
+}
+  catch(error){
+    console.log(error);
+    return res.status(404).json({message:"could not find the blog with given title or author name"});
+  }
+   
+
+
+}
+
 const createBlog = async (req, res) => {
   try {
     const newBlog = await Blog.create(req.body);
@@ -108,4 +132,4 @@ const updateBlogById=async(req,res)=>{
 }
 
 
-module.exports={getBlogs,createBlog,getBlogById,getAuthor,deleteBlogById,updateBlogById};
+module.exports={getBlogs,createBlog,getBlogById,getAuthor,deleteBlogById,updateBlogById,searchBlogs};
