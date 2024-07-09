@@ -1,5 +1,5 @@
-const BlogServiceClass= require('../services/blogs.service');
-const BlogService = new BlogServiceClass();
+const BlogService= require('../services/blogs.service');
+const BlogServiceInstance = new BlogService();
 //connect to db
 const mongoose = require("mongoose");
 const Blog = require('../models/blog.model'); 
@@ -10,7 +10,7 @@ const { message, regex } = require("../schemas/userSearch.schema");
 const getBlogs =  async (req,res)=>{
   try{
   // res.send( await  Blog.find());  
-  const blogs= await BlogService.finalAllBlogs();
+  const blogs= await BlogServiceInstance.finalAllBlogs();
   res.send(blogs);
   }
   catch(err){
@@ -63,7 +63,7 @@ const getAuthor=async(req,res)=>{
 
 const createBlog = async (req, res) => {
   try {
-    const newBlog = await BlogService.createBlogDocument(req.body);
+    const newBlog = await BlogServiceInstance.createBlogDocument(req.body);
     // console.log(newBlog);
     // const newBlog = new Blog(req.body);
     // await newBlog.save();
@@ -92,7 +92,7 @@ const deleteBlogById= async(req,res)=>{
   if(reqBlog==null){
     res.status(404).json({message: "could not find a blog with given Id"});
   }
-  await BlogService.deleteBlogDocumentById(req.params.id);
+  await BlogServiceInstance.deleteBlogDocumentById(req.params.id);
   return res.sendStatus(204);
   }
   catch(error){
@@ -108,7 +108,7 @@ const updateBlogById=async(req,res)=>{
   if(reqBlog ===null){
     res.status(404).json({message:"could not find a blog with given id"});
   }
-  const updatedBlog=await BlogService.updateBlogDocumentById(req.params.id,req.body);
+  const updatedBlog=await BlogServiceInstance.updateBlogDocumentById(req.params.id,req.body);
   res.status(200).json(updatedBlog);
   }
   catch(error){
@@ -121,7 +121,7 @@ const searchBlogs=async(req,res)=>{
   const {title,author}= req.query;
   
   try{
-    BlogService.findBlogByTitleAndAuthor(title,author);
+    BlogServiceInstance.findBlogByTitleAndAuthor(title,author);
     res.send(blogs);
 }
   catch(error){

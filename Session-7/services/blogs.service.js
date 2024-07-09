@@ -16,4 +16,4 @@ class BlogService{
 
 }
 
-module.exports= {BlogService};
+module.exports= BlogService;
